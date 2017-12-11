@@ -1,0 +1,21 @@
+{
+    "carrierAdviser": "5a0db89abe574371eca8d8a5",
+    "level": "Technical Leader",
+    "location": {
+        "country": "USA",
+        "city": "Fowlerville",
+        "office": "Fowlerville1"
+    },
+    "name": {
+        "first": "Olha",
+        "last": "Pusyk"
+    },
+    "password": "$2a$08$tgCbzcjS9Yktmw0GB0rbqOmiKU7MhB/7jrhvDOKj2iA.2pzJDcACG", //qwerty1
+    "permissions": ["rEmployee", "uEmployee"],
+    "phone": {
+        "mobile": null,
+        "internal": "1234"
+    },
+    "profile": "5a0c5f0dd2b73557f815a9ca",
+    "username": "opus"
+}
