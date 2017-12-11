@@ -1,0 +1,20 @@
+{
+    "level": "Senior",
+    "location": {
+        "country": "USA",
+        "city": "Los Angeles",
+        "office": "LA2"
+    },
+    "name": {
+        "first": "Alla",
+        "last": "Rebeskas"
+    },
+    "password": "$2a$08$MZVuXYYJ8YVVYIingn/FPOVsQ4fOVIeqdz5ldzQf2UaaNs1Q.0aS6", //qwerty2
+    "permissions": ["rEmployee", "uEmployee"],
+    "phone": {
+        "mobile": null,
+        "internal": "1234"
+    },
+    "profile": "5a0c5f0dd2b73557f815a9ca",
+    "username": "areb"
+}
