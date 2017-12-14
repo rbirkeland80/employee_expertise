@@ -22,9 +22,13 @@ function getEntryByIdWithReferences (req, res) {
         });
 };
 
+function hashPassword (collection) {
+    collection.password = collection.generateHash(collection.password);
+};
+
 routes.route('/')
     .get((req, res) => EmployeeCrud.getAllEntries(req, res))
-    .post((req, res) => EmployeeCrud.saveNewEntry(req, res));
+    .post((req, res) => EmployeeCrud.saveNewEntry(req, res, hashPassword));
 
 routes.param('id', (req, res, next, id) => EmployeeCrud.checkIdParam(req, res, next, id));
 
