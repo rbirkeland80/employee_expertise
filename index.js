@@ -2,15 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const router = require('express').Router();
+const passport = require('passport');
+const session = require('express-session');
 
 const app = express();
 const port = process.env.PORT || 3000;
-let configuredPassport;
+
 class Server {
     constructor() {
         this.initDB();
         this.initViewEngine();
         this.initExpressMiddleware();
+        this.initPassport();
         this.initRoutes();
         this.start();
     }
@@ -29,7 +32,14 @@ class Server {
     initExpressMiddleware() {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
+        app.use(session({ secret: 'someSecretToSaveSomewhereElse' }));
         app.use(express.static(__dirname + '/client'));
+    }
+
+    initPassport() {
+        require('./config/passport')(passport);
+        app.use(passport.initialize());
+        app.use(passport.session());
     }
 
     initDB() {
@@ -46,12 +56,22 @@ class Server {
 
     initRoutes() {
         const api = require('./apiRoutes');
+        const authentication = require('./login')(passport);
 
         router.get('/', (req, res) => {
             res.sendFile(__dirname + 'client/index.html');
         });
 
-        app.use('/api', api);
+        app.use('/auth', authentication);
+        app.use('/api', isLoggedIn, api);
+
+        function isLoggedIn (req, res, next) {
+            if (req.isAuthenticated()) {
+                return next();
+            }
+
+            res.redirect('/');
+        };
         // app.use('assets/avatar/mmyl.png') // should be the api to load avatar
     }
 }

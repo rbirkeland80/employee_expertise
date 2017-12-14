@@ -83,7 +83,11 @@ const employeeProperties = {
 const employeeSchema = new BaseSchema(employeeProperties);
 
 employeeSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
+};
+
+employeeSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
 const Employee = mongoose.model('Employee', employeeSchema);

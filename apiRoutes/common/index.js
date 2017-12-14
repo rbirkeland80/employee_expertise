@@ -84,12 +84,16 @@ class BaseCrud {
             });
     }
 
-    saveNewEntry(req, res) {
+    saveNewEntry(req, res, cb) {
         // investigate if&how body should be validated prior to delegating to it mongoose->mongo
         const collection = new this.model(req.body);
 
         return collection.setMetadata(1)
             .then(collection => {
+                if (cb) {
+                    cb(collection);
+                }
+
                 return collection.save();
             })
             .then(collection => {
