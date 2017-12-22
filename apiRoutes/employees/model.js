@@ -26,19 +26,24 @@ function getStringType (property, required = false, defaultValue) {
 };
 
 const employeeProperties = {
-    carrierAdviser: [{
+    carrierAdviser: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Employee'
-    }],
-    competenceManager: [{
+    },
+    competenceManager: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Employee'
-    }],
+    },
+    englishLevel: {
+        type: String,
+        enum: ['Advanced', 'Beginner', 'Intermediate', 'Pre-Intermediate', 'Upper-Intermediate']
+    },
+    futureEvaluationDate: Date,
     knowledgeBaseHistory: [{
         type: mongoose.Schema.Types.ObjectId,
-        // required: [true, 'KnowledgeBase should be specified'],
         ref: 'KnowledgeBase'
     }],
+    lastEvaluationDate: Date,
     level: getStringType('employeeLevel', true, 'Junior'),
     location: {
         country: getStringType('country', true),
@@ -51,21 +56,20 @@ const employeeProperties = {
         last: getStringType('lastName', true),
         middle: getStringType('middleName')
     },
-    password: { type: String, required: true }, // see requirement for this field
+    password: { type: String, required: true },
     permissions: [{
-        type: String,
-        default: permissions.rEmployee,
-        enum: Object.values(permissions)
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Permission'
     }],
     phone: {
         mobile: getStringType('mobilePhone'),
         internal: getStringType('internalPhone')
     },
-    profile: [{
+    profile: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, 'profile should be specified'],
         ref: 'Profile'
-    }],
+    },
     projectName:  getStringType('projectName'),
     username: {
         type: String,

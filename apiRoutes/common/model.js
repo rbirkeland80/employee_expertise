@@ -30,7 +30,7 @@ function BaseModelSchema () {
         }
     });
 
-    if (this.obj.name == null) {
+    if (!this.obj || (this.obj && !this.obj.hasOwnProperty('name'))) {
         this.add({
             name: {
                 type: String,

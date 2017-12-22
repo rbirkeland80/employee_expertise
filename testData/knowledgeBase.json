@@ -1,0 +1,21 @@
+// knowledge level 2
+{
+    "assignedToProfile": ["5a3ccfb9d7278b24b485401f"],
+    "name": "Java Script",
+    "hierarchyLevel": 1,
+    "topics": [
+        {
+            "name": "Functions",
+            "profileAssignmentMapping": {
+                "5a3ccfb9d7278b24b485401f": "5a3cce5bd7278b24b4854015"
+            }
+        }
+    ]
+}
+
+{
+    "assignedToProfile": ["5a3ccfb9d7278b24b485401f"],
+    "name": "Programming Languages",
+    "hierarchyLevel": 0,
+    "hierarchy": ["5a3ccffed7278b24b4854021"]
+}
