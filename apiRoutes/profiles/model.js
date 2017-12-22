@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const BaseSchema = require('../common/model.js');
 
-const profileSchema = new BaseSchema({
+const profileProperties = {
     employeePositionName: {
         default: 'Software Engineer',
         type: String,
@@ -12,8 +12,14 @@ const profileSchema = new BaseSchema({
             },
             message: '{VALUE} is invalid value for employee position name'
         }
-    }
-});
+    },
+    knowledgeBase: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'KnowledgeBase'
+    }]
+};
+
+const profileSchema = new BaseSchema(profileProperties);
 
 const Profile = mongoose.model('Profile', profileSchema);
 
