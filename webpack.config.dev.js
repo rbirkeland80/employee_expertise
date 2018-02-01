@@ -1,13 +1,15 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.config.common');
 
 module.exports = webpackMerge(commonConfig, {
+    entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './client/core/core.ts'],
     devtool: 'cheap-module-eval-source-map',
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
+        path: '/',
+        publicPath: 'http://localhost:3000/',
         filename: 'bundle.js',
         chunkFilename: '[id].chunk.js'
     },
@@ -25,6 +27,10 @@ module.exports = webpackMerge(commonConfig, {
             }
         ]
     },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
+    ],
     devServer: {
         historyApiFallback: true,
         stats: 'minimal'

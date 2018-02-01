@@ -6,7 +6,8 @@ const passport = require('passport');
 const session = require('express-session');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
+const isDev = process.env.NODE_ENV === 'dev';
 
 class Server {
     constructor() {
@@ -19,6 +20,18 @@ class Server {
     }
 
     start() {
+        if (isDev) {
+            const webpack = require('webpack');
+            const config = require('./webpack.config.dev.js');
+            const compiler = webpack(config);
+
+            const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
+            const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
+
+            app.use(webpackDevMiddleware);
+            app.use(webpackHotMiddleware);
+        }
+
         app.listen(port, function() {
             console.log(`Listening on port ${port}...`);
         });
@@ -58,9 +71,9 @@ class Server {
         const api = require('./apiRoutes');
         const authentication = require('./login')(passport);
 
-        router.get('/', (req, res) => {
-            res.sendFile(__dirname + 'client/index.html');
-        });
+        // router.get('/', (req, res) => {
+        //     res.sendFile(__dirname + 'client/index.html');
+        // });
 
         app.use('/auth', authentication);
         app.use('/api', isLoggedIn, api);
