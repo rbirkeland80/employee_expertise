@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-const Employee = require('../apiRoutes/employees/model.js');
+const Employee = require('../api/employees/model.js');
 
 function returnRoutes (passport) {
     routes.route('/login')

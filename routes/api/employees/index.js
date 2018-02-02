@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const Employee = require('./model.js');
-const BaseCrud = require(__dirname + '/../common/index.js');
+const BaseCrud = require('../common/index.js');
 
 const EmployeeCrud = new BaseCrud(Employee);
 

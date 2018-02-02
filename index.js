@@ -12,7 +12,6 @@ const isDev = process.env.NODE_ENV === 'dev';
 class Server {
     constructor() {
         this.initDB();
-        this.initViewEngine();
         this.initExpressMiddleware();
         this.initPassport();
         this.initRoutes();
@@ -35,11 +34,6 @@ class Server {
         app.listen(port, function() {
             console.log(`Listening on port ${port}...`);
         });
-    }
-
-    initViewEngine() {
-        app.engine('jade', require('jade').__express);
-        app.set('view engine', 'jade');
     }
 
     initExpressMiddleware() {
@@ -68,15 +62,15 @@ class Server {
     }
 
     initRoutes() {
-        const api = require('./apiRoutes');
-        const authentication = require('./login')(passport);
-
-        // router.get('/', (req, res) => {
-        //     res.sendFile(__dirname + 'client/index.html');
-        // });
+        const api = require('./routes/api');
+        const authentication = require('./routes/login')(passport);
+        const errorHandler = require('./routes/error');
 
         app.use('/auth', authentication);
         app.use('/api', isLoggedIn, api);
+        // Mount 404 handler as penultimate middleware
+        app.use(errorHandler.notFound);
+        app.use(errorHandler.defaultError);
 
         function isLoggedIn (req, res, next) {
             if (req.isAuthenticated()) {

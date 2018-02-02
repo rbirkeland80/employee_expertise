@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const util = require('util');
-const validationCodes = require(__dirname + '/../../common/constants/codes.js');
+const path = require('path');
+const validationCodes = require(path.resolve('./', 'common/constants/codes.js'));
 
 const Schema = mongoose.Schema;
 

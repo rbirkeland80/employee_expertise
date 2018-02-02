@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const Employee = require('../apiRoutes/employees/model.js');
+const Employee = require('../routes/api/employees/model.js');
 
 function configurePassport (passport) {
     passport.serializeUser((employee, done) => {

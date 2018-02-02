@@ -1,7 +1,8 @@
+const path = require('path');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
 const BaseSchema = require('../common/model.js');
-const permissions = require('../../common/constants/permission.js');
+const permissions = require(path.resolve('./', 'common/constants/permission.js'));
 
 function getStringType (property, required = false, defaultValue) {
     const objDescriptor = {

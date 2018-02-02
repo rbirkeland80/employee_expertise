@@ -1,4 +1,5 @@
-const validationCodes = require(__dirname + '/../../common/constants/codes.js');
+const path = require('path');
+const validationCodes = require(path.resolve('./', 'common/constants/codes.js'));
 
 const defaultErrorMsg = 'Unexpected error happened. Please try again later.';
 

@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 const Level = require('./model.js');
-const BaseCrud = require(__dirname + '/../common/index.js');
+const BaseCrud = require('../common/index.js');
 
 const LevelCrud = new BaseCrud(Level);
 
