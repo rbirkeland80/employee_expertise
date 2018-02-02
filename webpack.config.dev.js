@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 
 const webpackMerge = require('webpack-merge');
@@ -7,7 +8,7 @@ module.exports = webpackMerge(commonConfig, {
     entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './client/core/core.ts'],
     devtool: 'cheap-module-eval-source-map',
     output: {
-        path: '/',
+        path: path.resolve(__dirname, 'dist'),
         publicPath: 'http://localhost:3001/',
         filename: 'bundle.js',
         chunkFilename: '[id].chunk.js'
