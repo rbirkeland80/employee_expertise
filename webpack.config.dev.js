@@ -3,14 +3,16 @@ const webpack = require('webpack');
 
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.config.common');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = webpackMerge(commonConfig, {
-    entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './client/core/core.ts'],
+    // entry: ['webpack/hot/dev-server', 'webpack-hot-middleware/client', './client/core/core.ts'],
     devtool: 'cheap-module-eval-source-map',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        publicPath: 'http://localhost:3001/',
-        filename: 'bundle.js',
+        publicPath: '/',
+        // publicPath: 'http://localhost:3001/',
+        filename: '[name].bundle.js',
         chunkFilename: '[id].chunk.js'
     },
     watchOptions: {
@@ -22,6 +24,7 @@ module.exports = webpackMerge(commonConfig, {
                 test: /\.ts$/,
                 use: [
                     { loader: 'awesome-typescript-loader', options: {
+                        configFileName: path.resolve( path.resolve(__dirname, 'client/tsconfig.json')),
                         transpileOnly: true
                     }},
                     { loader: 'angular2-template-loader' },
@@ -31,6 +34,10 @@ module.exports = webpackMerge(commonConfig, {
         ]
     },
     plugins: [
+        new ExtractTextPlugin({
+            filename: '[name].css',
+            allChunks: true
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin()
     ],
