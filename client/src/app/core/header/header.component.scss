@@ -1,0 +1,37 @@
+:host {
+    display: flex;
+    height: 55px;
+
+    header {
+        padding: 5px 15px;
+        border-right: 2px solid #c8c8c8;
+
+        img {
+            border-radius: 3px;
+        }
+    }
+
+    nav {
+        display: flex;
+        line-height: 55px;
+        vertical-align: middle;
+        width: 100%;
+        justify-content: space-between;
+
+        ul {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                padding: 0 5px;
+                border-right: 2px solid #c8c8c8;
+
+                &:last-of-type {
+                    border-right: 0 none;
+                }
+            }
+        }
+    }
+}

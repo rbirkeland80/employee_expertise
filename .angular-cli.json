@@ -17,7 +17,7 @@
             "test": "test.ts",
             "tsconfig": "tsconfig.app.json",
             "testTsconfig": "tsconfig.spec.json",
-            "prefix": "app",
+            "prefix": "ee",
             "styles": [
                 "assets/css/styles.scss"
             ],
@@ -41,7 +41,7 @@
             "test": "test.ts",
             "tsconfig": "tsconfig.server.json",
             "testTsconfig": "tsconfig.spec.json",
-            "prefix": "app",
+            "prefix": "ee",
             "styles": [
                 "assets/css/styles.scss"
             ],
