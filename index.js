@@ -1,3 +1,7 @@
+'use strict';
+require('zone.js/dist/zone-node');
+require('reflect-metadata');
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -6,41 +10,44 @@ const passport = require('passport');
 const session = require('express-session');
 
 const app = express();
-const port = process.env.PORT || 3001;
-const isDev = process.env.NODE_ENV === 'dev';
+const port = process.env.PORT || 3000;
 
 class Server {
     constructor() {
         this.initDB();
         this.initExpressMiddleware();
+        this.initAngularUniversal();
         this.initPassport();
         this.initRoutes();
         this.start();
     }
 
     start() {
-        if (isDev) {
-            const webpack = require('webpack');
-            const config = require('./webpack.config.dev.js');
-            const compiler = webpack(config);
-
-            const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
-            const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
-
-            app.use(webpackDevMiddleware);
-            app.use(webpackHotMiddleware);
-        }
-
         app.listen(port, function() {
             console.log(`Listening on port ${port}...`);
         });
+    }
+
+    initAngularUniversal() {
+        const ngUniversal = require('@nguniversal/express-engine');
+        const { provideModuleMap } = require('@nguniversal/module-map-ngfactory-loader');
+
+        const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
+
+        app.engine('html', ngUniversal.ngExpressEngine({
+            bootstrap: AppServerModuleNgFactory,
+            providers: [
+                provideModuleMap(LAZY_MODULE_MAP)
+            ]
+        }));
+        app.set('view engine', 'html');
+        app.set('views', 'dist');
     }
 
     initExpressMiddleware() {
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(session({ secret: 'someSecretToSaveSomewhereElse', resave: true, saveUninitialized: true }));
-        app.use(express.static(__dirname + '/dist'));
     }
 
     initPassport() {
@@ -68,9 +75,10 @@ class Server {
 
         app.use('/auth', authentication);
         app.use('/api', isLoggedIn, api);
-        // Mount 404 handler as penultimate middleware
-        app.use(errorHandler.notFound);
-        app.use(errorHandler.defaultError);
+
+        app.use('/', (req, res) => { console.log('root'); res.render('browser/index', {req, res}) });
+        app.use(express.static(`${__dirname}/dist`));
+        app.get('*', (req, res) => { console.log('redirect'); res.redirect('/')});
 
         function isLoggedIn (req, res, next) {
             if (req.isAuthenticated()) {
