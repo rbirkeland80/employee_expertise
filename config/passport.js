@@ -16,17 +16,17 @@ function configurePassport (passport) {
         Employee.findOne({ username :  username })
             .then(employee => {
                 if (!employee) {
-                    return done('No employee found.', false);
+                     return done('Oops! Wrong username or password.', false);
                 }
 
                 if (!employee.validPassword(password)) {
-                    return done('Oops! Wrong password.', false);
+                    return done('Oops! Wrong username or password.', false);
                 }
     
                 return done(null, employee);
             })
             .catch(error => {
-                return done(err);
+                return done(error);
             });
     }));
 };

@@ -89,7 +89,7 @@ class BaseCrud {
         // investigate if&how body should be validated prior to delegating to it mongoose->mongo
         const collection = new this.model(req.body);
 
-        return collection.setMetadata(req.session.passport.user)
+        return collection.setMetadata(req.session.passport && req.session.passport.user)
             .then(collection => {
                 if (cb) {
                     cb(collection);

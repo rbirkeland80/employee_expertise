@@ -3,6 +3,7 @@ require('zone.js/dist/zone-node');
 require('reflect-metadata');
 
 const express = require('express');
+const cors = require('cors')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const router = require('express').Router();
@@ -23,7 +24,7 @@ class Server {
     }
 
     start() {
-        app.listen(port, function() {
+        app.listen(port, function () {
             console.log(`Listening on port ${port}...`);
         });
     }
@@ -45,9 +46,21 @@ class Server {
     }
 
     initExpressMiddleware() {
+        const whitelist = ['http://localhost:3000', 'http://localhost:4200'];
+        const corsOptions = {
+            origin: function (origin, callback) {
+                if (whitelist.indexOf(origin) !== -1) {
+                    callback(null, true)
+                } else {
+                    callback(new Error('Not allowed by CORS'))
+                }
+            }
+        };
+
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(session({ secret: 'someSecretToSaveSomewhereElse', resave: true, saveUninitialized: true }));
+        app.use(cors(corsOptions));
     }
 
     initPassport() {
@@ -60,10 +73,12 @@ class Server {
         const configDB = require('./config/database.js');
 
         mongoose.Promise = global.Promise;
-        mongoose.connect(configDB.url, { useMongoClient: true });
+        mongoose.connect(configDB.url, {
+            useMongoClient: true
+        });
         const db = mongoose.connection;
         db.on('error', console.error.bind(console, 'connection error:'));
-        db.once('openUri', function() {
+        db.once('openUri', function () {
             console.log('connected to db');
         });
     }
@@ -71,16 +86,15 @@ class Server {
     initRoutes() {
         const api = require('./routes/api');
         const authentication = require('./routes/login')(passport);
-        const errorHandler = require('./routes/error');
 
         app.use('/auth', authentication);
         app.use('/api', isLoggedIn, api);
 
-        app.use('/', (req, res) => { console.log('root'); res.render('browser/index', {req, res}) });
+        app.use('/', (req, res) => res.render('browser/index', { req, res }));
         app.use(express.static(`${__dirname}/dist`));
-        app.get('*', (req, res) => { console.log('redirect'); res.redirect('/')});
+        app.get('*', (req, res) => res.redirect('/'));
 
-        function isLoggedIn (req, res, next) {
+        function isLoggedIn(req, res, next) {
             if (req.isAuthenticated()) {
                 return next();
             }

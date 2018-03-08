@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-import { HomeComponent } from './core/home/home.component';
-
 const appRoutes: Routes = [
-    { path: '', component: HomeComponent }
+    { path: '', redirectTo: `/employees/${localStorage.getItem('username')}`, pathMatch: 'full' }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})
+        RouterModule.forRoot(appRoutes, {
+            enableTracing: true,
+            preloadingStrategy: PreloadAllModules
+        })
     ],
     exports: [RouterModule]
 })

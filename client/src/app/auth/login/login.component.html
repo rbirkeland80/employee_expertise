@@ -1,0 +1,19 @@
+<form (ngSubmit)="onLogin(f)" #f="ngForm">
+    <h1>Login Form</h1>
+    <div *ngIf="!!requestError" [@flyInOut]="'in'">
+        <p class="msg-danger">{{requestError}}</p>
+    </div>
+    <div>
+        <input type="text" placeholder="Username" name="username" ngModel required id="username" />
+        <div class="msg-danger">
+            Username is required
+        </div>
+    </div>
+    <div>
+        <input type="password" placeholder="Password" name="password" ngModel required id="password" />
+        <div class="msg-danger">
+            Password is required
+        </div>
+    </div>
+    <button class="btn primary" type="submit" [disabled]="!f.valid">Log in</button>
+</form>

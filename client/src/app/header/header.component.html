@@ -1,0 +1,28 @@
+<header class="main-bg">
+    <img src="assets/images/logo.png" alt="Employee Expertise">
+</header>
+<nav class="main-bg">
+    <ul class="navbar" *ngIf="isAuthenticated(); else login">
+        <li routerLinkActive="active">
+            <a routerLink="/">Item 1</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/">Item 2</a>
+        </li>
+    </ul>
+    <ng-template #login>
+        <p>Please login to get access</p>
+    </ng-template>
+    <ul class="navbar navbar-right">
+        <li *ngIf="!isAuthenticated()">
+            <a routerLink="/login">Login</a>
+        </li>
+        <li *ngIf="isAuthenticated()" appDropDown class="dorp-down">
+            {{ fullName }} <span class="fa fa-caret-down"></span>
+            <ul class="dropdown-menu">
+                <li><a (click)="logout()">Log out</a></li>
+                <li><a style="cursor: pointer;">Admin data</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
