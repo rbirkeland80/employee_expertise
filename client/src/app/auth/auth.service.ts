@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,  HttpErrorResponse } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -13,7 +13,7 @@ const httpOptions = {
     })
 };
 
-interface loginResponseType {
+interface LoginResponseType {
     status: boolean;
     sessionTokenId: string;
     user: {
@@ -23,7 +23,7 @@ interface loginResponseType {
             last: string,
             middle: string | undefined | null
         }
-    }
+    };
 }
 
 @Injectable()
@@ -48,7 +48,7 @@ export class AuthService {
         const lName = user.fullName.last
         ? user.fullName.last
         : '';
-        
+
         localStorage.setItem('username', user.username);
         localStorage.setItem('fullName', `${fName} ${lName}`);
     }
@@ -60,7 +60,7 @@ export class AuthService {
 
     login(loginForm: { username: string, password: string }): Observable<string> {
         return this.http.post('http://localhost:3000/auth/login', loginForm, httpOptions)
-            .map((data: loginResponseType) => {
+            .map((data: LoginResponseType) => {
                 if (data.status) {
                     this.storeSessionToken(data.sessionTokenId);
                     this.storeUserInfo(data.user);
@@ -68,7 +68,7 @@ export class AuthService {
 
                 return data.user.username;
             })
-            .catch((error: HttpErrorResponse):Observable<any> => {
+            .catch((error: HttpErrorResponse): Observable<any> => {
                 if (error.error instanceof ErrorEvent) {
                     console.error('An error occurred:', error.error.message);
 
@@ -91,7 +91,7 @@ export class AuthService {
                 this.cleanUserInfo();
                 return data.status;
             })
-            .catch((error: HttpErrorResponse):Observable<any> => {
+            .catch((error: HttpErrorResponse): Observable<any> => {
                 if (error.error instanceof ErrorEvent) {
                     console.error('An error occurred:', error.error.message);
 

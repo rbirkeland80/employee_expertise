@@ -1,6 +1,6 @@
 {
     "rulesDirectory": [
-        "node_modules/codelyzer"
+        "../node_modules/codelyzer"
     ],
     "rules": {
         "arrow-return-shorthand": true,
@@ -120,13 +120,13 @@
         "directive-selector": [
             true,
             "attribute",
-            "app",
+            "ee",
             "camelCase"
         ],
         "component-selector": [
             true,
             "element",
-            "app",
+            "ee",
             "kebab-case"
         ],
         "no-output-on-prefix": true,

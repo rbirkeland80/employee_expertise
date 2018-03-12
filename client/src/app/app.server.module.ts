@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
     imports: [
         AppModule,
         ServerModule,
-        ModuleMapLoaderModule 
+        ModuleMapLoaderModule
     ],
     bootstrap: [AppComponent]
 })

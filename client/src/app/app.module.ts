@@ -19,7 +19,7 @@ import { AuthGuard } from './auth/auth-guard.service';
     ],
     imports: [
         BrowserModule,
-        //BrowserModule.withServerTransition({appId: 'ee-app'}),
+        // BrowserModule.withServerTransition({appId: 'ee-app'}),
         BrowserAnimationsModule,
         HttpClientModule,
         HeaderModule,

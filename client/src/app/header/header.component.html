@@ -17,11 +17,11 @@
         <li *ngIf="!isAuthenticated()">
             <a routerLink="/login">Login</a>
         </li>
-        <li *ngIf="isAuthenticated()" appDropDown class="dorp-down">
+        <li *ngIf="isAuthenticated()" eeDropDown class="dorp-down">
             {{ fullName }} <span class="fa fa-caret-down"></span>
             <ul class="dropdown-menu">
                 <li><a (click)="logout()">Log out</a></li>
-                <li><a style="cursor: pointer;">Admin data</a></li>
+                <li><a routerLink="/admin">Admin data</a></li>
             </ul>
         </li>
     </ul>

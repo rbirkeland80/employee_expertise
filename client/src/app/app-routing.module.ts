@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
+import { AuthGuard } from './auth/auth-guard.service';
+
 const appRoutes: Routes = [
-    { path: '', redirectTo: `/employees/${localStorage.getItem('username')}`, pathMatch: 'full' }
+    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule', canLoad: [AuthGuard] },
+    { path: '**', redirectTo: `/employees/${localStorage.getItem('username')}` }
 ];
 
 @NgModule({
