@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,  HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -29,6 +30,7 @@ interface LoginResponseType {
 @Injectable()
 export class AuthService {
     sessionTokenId: string;
+    onUserLogin = new Subject<string>();
 
     constructor(private http: HttpClient) { }
 
@@ -46,11 +48,14 @@ export class AuthService {
             ? `${user.fullName.first }`
             : 'Welcome ';
         const lName = user.fullName.last
-        ? user.fullName.last
-        : '';
+            ? user.fullName.last
+            : '';
+        const fullName = `${fName} ${lName}`;
 
         localStorage.setItem('username', user.username);
-        localStorage.setItem('fullName', `${fName} ${lName}`);
+        localStorage.setItem('fullName', fullName);
+
+        this.onUserLogin.next(fullName);
     }
 
     private cleanUserInfo () {

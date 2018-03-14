@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Response } from '@angular/http';
+import { Subscription } from 'rxjs/Subscription';
 
 import { AuthService } from '../auth/auth.service';
 
@@ -9,9 +10,10 @@ import { AuthService } from '../auth/auth.service';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
     constructor(private authService: AuthService, private router: Router) { }
     fullName: string;
+    subscription: Subscription;
 
     isAuthenticated() {
         return this.authService.isAuthenticated();
@@ -29,7 +31,17 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        // subscribe to change of data here
+        this.subscription = this.authService.onUserLogin
+            .subscribe(
+                (userName: string) => {
+                    this.fullName = userName;
+                }
+            );
+
         this.fullName = localStorage.getItem('fullName');
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
