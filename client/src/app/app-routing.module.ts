@@ -4,8 +4,10 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthGuard } from './auth/auth-guard.service';
 
 const appRoutes: Routes = [
-    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule', canLoad: [AuthGuard] },
-    // { path: '**', redirectTo: `/employees/${localStorage.getItem('username')}` }
+    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule', canActivate: [AuthGuard] },
+    { path: 'expertise', loadChildren: 'app/expertise/expertise.module#ExpertiseModule', canActivate: [AuthGuard] },
+    { path: 'support', loadChildren: 'app/support/support.module#SupportModule', canActivate: [AuthGuard] },
+    { path: '', redirectTo: '/about', pathMatch: 'full' }
 ];
 
 @NgModule({

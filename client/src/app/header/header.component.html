@@ -4,10 +4,16 @@
 <nav class="main-bg">
     <ul class="navbar" *ngIf="isAuthenticated(); else login">
         <li routerLinkActive="active">
-            <a routerLink="/">Item 1</a>
+            <a routerLink="/">About</a>
         </li>
         <li routerLinkActive="active">
-            <a routerLink="/">Item 2</a>
+            <a routerLink="/expertise">Expertise</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/support">Support</a>
+        </li>
+        <li routerLinkActive="active">
+            <a routerLink="/admin">Admin</a>
         </li>
     </ul>
     <ng-template #login>
@@ -21,7 +27,6 @@
             {{ fullName }} <span class="fa fa-caret-down"></span>
             <ul class="dropdown-menu">
                 <li><a (click)="logout()">Log out</a></li>
-                <li><a routerLink="/admin">Admin data</a></li>
             </ul>
         </li>
     </ul>

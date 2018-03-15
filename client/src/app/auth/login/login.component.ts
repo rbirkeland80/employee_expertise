@@ -39,7 +39,7 @@ export class LoginComponent {
         this.authService.login(loginForm)
             .subscribe(
                 (username: string) => {
-                    this.router.navigate(['employees', username ]);
+                    this.router.navigate(['about']);
                 },
                 (error: string) => {
                     this.requestError = error;
