@@ -61,7 +61,7 @@ export class AuthService {
     }
 
     login(loginForm: { username: string, password: string }): Observable<string> {
-        const authBaseUrl = new AuthRequest().authBase;
+        const authBaseUrl = new AuthRequest().base;
 
         return this.http.post(`${authBaseUrl}login`, loginForm, httpOptions)
             .map((data: LoginResponseType) => {

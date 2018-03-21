@@ -11,7 +11,7 @@ import { ApiRequest } from '../../shared/constants/request.constant';
 
 @Injectable()
 export class EmployeesEffects {
-    private apiBaseUrl = new ApiRequest().apiBase;
+    private apiBaseUrl = new ApiRequest().base;
 
     constructor(private actions$: Actions, private http: HttpClient) { }
 

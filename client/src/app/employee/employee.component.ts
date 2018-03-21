@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
+import { AvatarRequest } from '../shared/constants/request.constant';
 import { Employee } from './employee.model';
 import * as fromEmployees from './store/employees.reducers';
 import * as EmployeesActions from './store/employees.actions';
@@ -15,6 +16,7 @@ export class EmployeeComponent implements OnInit {
     employee: Employee;
     avatarImagePath: string;
     private employeeState: Observable<{ employee: Employee }>;
+    private avatarBaseUrl = new AvatarRequest().base;
 
     constructor(private store: Store<fromEmployees.EmployeesState>) { }
 
@@ -27,7 +29,7 @@ export class EmployeeComponent implements OnInit {
                 (state: { employee: Employee }) => {
                     if (state && state.employee) {
                         this.employee = state.employee;
-                        this.avatarImagePath = `http://localhost:3000/avatar/${state.employee.username}.png`;
+                        this.avatarImagePath = `${this.avatarBaseUrl}${state.employee.username}.png`;
                     }
                 }
             );
