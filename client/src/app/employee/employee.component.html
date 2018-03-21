@@ -1,2 +1,7 @@
-Employee module here
+<main *ngIf="employee">
+    employeeState: {{ employee.name.first }}
+    <div>
+        <img [src]="avatarImagePath" alt="{{employee.name.username}}" width="150">
+    </div>
+</main>
 

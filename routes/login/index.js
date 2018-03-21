@@ -4,14 +4,13 @@ const Employee = require('../api/employees/model.js');
 function returnRoutes (passport) {
     routes.route('/login')
         .post(passport.authenticate('local'), (req, res) => {
-            res.send({
-                status: true,
-                sessionTokenId: req.sessionID,
-                user: {
-                    fullName: req.user.name,
-                    username: req.user.username
-                }
-            });
+            const responseObj = {
+                id: req.user._id,
+                fullName: req.user.name,
+                username: req.user.username
+            };
+
+            res.send(responseObj);
         });
 
     routes.route('/logout')

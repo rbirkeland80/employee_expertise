@@ -9,7 +9,7 @@ function getEntryByIdWithReferences (req, res) {
         .populate('carrierAdviser', 'userName name location phone')
         .populate('competenceManager', 'userName name location phone')
         .populate('profile', 'name employeePositionName')
-        .select('-password -__v')
+        .select('-password -meta -active -__v')
         .then(data => {
             if (!data || data.length === 0) {
                 return res.status(204).send(data);

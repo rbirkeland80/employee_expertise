@@ -1,49 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders,  HttpErrorResponse } from '@angular/common/http';
-
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import { AuthRequest } from '../shared/constants/request.constant';
+
 const httpOptions = {
     headers: new HttpHeaders({
         'Access-Control-Allow-Origin': 'http://localhost:3000',
-        'Content-Type': 'application/json'
-    })
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': 'true'
+    }),
+    withCredentials: true,
+    reportProgress: true
 };
 
 interface LoginResponseType {
-    status: boolean;
-    sessionTokenId: string;
-    user: {
-        username: string,
-        fullName: {
-            first: string,
-            last: string,
-            middle: string | undefined | null
-        }
+    username: string;
+    fullName: {
+        first: string,
+        last: string,
+        middle: string | undefined | null
     };
 }
 
 @Injectable()
 export class AuthService {
-    sessionTokenId: string;
     onUserLogin = new Subject<string>();
+    private sessionTokenId: string;
 
     constructor(private http: HttpClient) { }
 
-    private storeSessionToken (sessionTokenId) {
-        localStorage.setItem('sessionTokenId', sessionTokenId);
-        this.sessionTokenId = sessionTokenId;
-    }
-
-    private cleanSessionToken () {
+    private cleanSessionCookie () {
+        // TO DO: see how to delete session cookie
+        this.sessionTokenId = null;
         localStorage.removeItem('sessionTokenId');
     }
 
-    private storeUserInfo (user) {
+    private storeBasicUserInfo (user) {
         const fName = user.fullName.first
             ? `${user.fullName.first }`
             : 'Welcome ';
@@ -52,6 +49,7 @@ export class AuthService {
             : '';
         const fullName = `${fName} ${lName}`;
 
+        localStorage.setItem('userId', user.id);
         localStorage.setItem('username', user.username);
         localStorage.setItem('fullName', fullName);
 
@@ -59,19 +57,20 @@ export class AuthService {
     }
 
     private cleanUserInfo () {
-        localStorage.removeItem('username');
-        localStorage.removeItem('fullName');
+        localStorage.clear();
     }
 
     login(loginForm: { username: string, password: string }): Observable<string> {
-        return this.http.post('http://localhost:3000/auth/login', loginForm, httpOptions)
-            .map((data: LoginResponseType) => {
-                if (data.status) {
-                    this.storeSessionToken(data.sessionTokenId);
-                    this.storeUserInfo(data.user);
-                }
+        const authBaseUrl = new AuthRequest().authBase;
 
-                return data.user.username;
+        return this.http.post(`${authBaseUrl}login`, loginForm, httpOptions)
+            .map((data: LoginResponseType) => {
+                if (data) {
+                    this.storeBasicUserInfo(data);
+                }
+                // TO DO: remove once able to deal with cookies
+                localStorage.setItem('sessionTokenId', 'test token');
+                this.sessionTokenId = 'test token';
             })
             .catch((error: HttpErrorResponse): Observable<any> => {
                 if (error.error instanceof ErrorEvent) {
@@ -87,12 +86,9 @@ export class AuthService {
     }
 
     logout(): Observable<boolean> {
-        localStorage.removeItem('sessionTokenId');
-        this.sessionTokenId = null;
-
         return this.http.get('http://localhost:3000/auth/logout', httpOptions)
             .map((data: {status: boolean}) => {
-                this.cleanSessionToken();
+                this.cleanSessionCookie();
                 this.cleanUserInfo();
                 return data.status;
             })
@@ -110,7 +106,7 @@ export class AuthService {
 
     }
 
-    getToken() {
+    private getSessionCookie() {
         if (!this.sessionTokenId) {
             this.sessionTokenId = localStorage.getItem('sessionTokenId');
         }
@@ -119,6 +115,6 @@ export class AuthService {
     }
 
     isAuthenticated() {
-        return !!this.getToken();
+        return !!this.getSessionCookie();
     }
 }

@@ -26,9 +26,9 @@ import { AuthService } from '../auth.service';
     ]
 })
 export class LoginComponent {
-    constructor(private authService: AuthService, private router: Router) { }
-
     requestError = null;
+
+    constructor(private authService: AuthService, private router: Router) { }
 
     onLogin(form: NgForm) {
         const loginForm = {
@@ -38,7 +38,7 @@ export class LoginComponent {
 
         this.authService.login(loginForm)
             .subscribe(
-                (username: string) => {
+                () => {
                     this.router.navigate(['about']);
                 },
                 (error: string) => {

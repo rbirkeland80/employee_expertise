@@ -11,9 +11,10 @@ import { AuthService } from '../auth/auth.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    constructor(private authService: AuthService, private router: Router) { }
     fullName: string;
     subscription: Subscription;
+
+    constructor(private authService: AuthService, private router: Router) { }
 
     isAuthenticated() {
         return this.authService.isAuthenticated();

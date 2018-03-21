@@ -49,17 +49,24 @@ class Server {
         const whitelist = ['http://localhost:3000', 'http://localhost:4200'];
         const corsOptions = {
             origin: function (origin, callback) {
+                origin = 'http://localhost:3000'; // hack for testing locally images
                 if (whitelist.indexOf(origin) !== -1) {
                     callback(null, true)
                 } else {
                     callback(new Error('Not allowed by CORS'))
                 }
-            }
+            },
+            credentials: true
         };
 
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
-        app.use(session({ secret: 'someSecretToSaveSomewhereElse', resave: true, saveUninitialized: true }));
+        app.use(session({
+            secret: 'someSecretToSaveSomewhereElse',
+            cookie: { maxAge: 1000*60*10 },
+            resave: true,
+            saveUninitialized: true
+        }));
         app.use(cors(corsOptions));
     }
 
@@ -85,10 +92,12 @@ class Server {
 
     initRoutes() {
         const api = require('./routes/api');
+        const avatar = require('./routes/avatar');
         const authentication = require('./routes/login')(passport);
 
         app.use('/auth', authentication);
         app.use('/api', isLoggedIn, api);
+        app.use('/avatar', isLoggedIn, avatar);
 
         app.use('/', (req, res) => res.render('browser/index', { req, res }));
         app.use(express.static(`${__dirname}/dist`));
@@ -99,9 +108,8 @@ class Server {
                 return next();
             }
 
-            res.redirect('/');
+            res.status(401).send('You are not authorized to view the data');
         };
-        // app.use('assets/avatar/mmyl.png') // should be the api to load avatar
     }
 }
 
