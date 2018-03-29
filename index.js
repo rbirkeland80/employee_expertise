@@ -63,7 +63,7 @@ class Server {
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(session({
             secret: 'someSecretToSaveSomewhereElse',
-            cookie: { maxAge: 1000*60*10 },
+            cookie: { maxAge: 1000*60*60*24 },
             resave: true,
             saveUninitialized: true
         }));

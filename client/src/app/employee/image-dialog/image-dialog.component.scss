@@ -1,0 +1,10 @@
+@import 'sharedSettings';
+
+.fa.fa-close {
+    font-size: 40px;
+    float: right;
+    color: $color-blue-main;
+    padding: 5px 0 5px 8px;
+    border-radius: 6px;
+    background-color: $link-color-blue;
+}

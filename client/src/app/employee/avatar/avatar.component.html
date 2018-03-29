@@ -1,0 +1,7 @@
+<div class="avatar-image">
+    <div class="actions-block">
+        <span class="fa fa-search-plus" id="zoom-in" title="Zoom In" mat-button (click)="onZoom()">&nbsp;</span>
+        <span class="fa fa-edit" id="edit" title="Edit picture">&nbsp;</span>
+    </div>
+    <img [src]="avatarImagePath" alt="{{username}}" [eeImgFallback]="defaultAvatarUrl" width="150"/>
+</div>

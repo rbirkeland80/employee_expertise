@@ -1,0 +1,40 @@
+@import 'sharedSettings';
+
+$start-shadow: rgba(0, 0, 0, 0.2);
+$end-shadow: rgba(0, 0, 0, 0.19);
+
+.avatar-image {
+    position: relative;
+
+    .actions-block {
+        position: absolute;
+        right: 0;
+        background-color: $link-color-blue;
+        padding: 4px;
+        opacity: 1;
+        color: $color-blue-main;
+        border-radius: 0 8px 0 8px;
+        box-shadow: 0 2px 4px 0 $start-shadow, 0 3px 10px 0 $end-shadow;
+        font-size: 16px;
+
+        span {
+            padding-right: 5px;
+            display: inline-block;
+            opacity: 0.5;
+
+            &:hover {
+                cursor: pointer;
+                opacity: 1;
+            }
+        }
+
+        span:last-of-type {
+            padding-right: 0;
+        }
+    }
+
+    img {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px 0 $start-shadow, 0 6px 20px 0 $end-shadow;
+    }
+}

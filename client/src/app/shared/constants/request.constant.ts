@@ -20,3 +20,8 @@ export class AuthRequest extends BaseRequest {
 export class AvatarRequest extends BaseRequest {
     public path = 'avatar';
 }
+
+export class ImagesRequest extends BaseRequest {
+    public path = 'assets/images';
+    public port = '4200';
+}

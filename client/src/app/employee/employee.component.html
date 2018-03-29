@@ -1,7 +1,5 @@
 <main *ngIf="employee">
-    employeeState: {{ employee.name.first }}
-    <div>
-        <img [src]="avatarImagePath" alt="{{employee.name.username}}" width="150">
-    </div>
+    <ee-avatar [username]="employee.username"></ee-avatar>
+    <ee-basic-info></ee-basic-info>
 </main>
 
