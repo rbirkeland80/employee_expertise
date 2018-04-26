@@ -38,6 +38,10 @@
                 padding: 0 5px;
                 border-right: 2px solid $color-grey-border;
 
+                &.active {
+                    background-color: $color-blue-dark;
+                }
+
                 &:last-of-type {
                     border-right: 0 none;
                 }
