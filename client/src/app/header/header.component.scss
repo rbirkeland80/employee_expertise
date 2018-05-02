@@ -21,7 +21,7 @@
         justify-content: space-between;
 
         p {
-            color: $link-color-blue;
+            color: $color-blue-light;
             font-size: $font-size-big;
             line-height: 1;
             vertical-align: middle;
@@ -50,7 +50,7 @@
             &.navbar-right li {
                 text-align: right;
                 padding-right: 0;
-                color: $link-color-blue;
+                color: $color-blue-light;
 
                 > *:first-child {
                     padding-right: 10px;
