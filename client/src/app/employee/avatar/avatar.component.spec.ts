@@ -8,7 +8,7 @@ import { AvatarComponent } from './avatar.component';
 import { ImageDialogComponent } from '../image-dialog/image-dialog.component';
 
 @Directive({ selector: '[eeImgFallback]' })
-class ImgFallbackDirective { @Input('eeImgFallback') fallbackUrl: string; }
+class ImgFallbackDirective { @Input() eeImgFallback: string; }
 
 describe('AvatarComponent', () => {
     let component: AvatarComponent;

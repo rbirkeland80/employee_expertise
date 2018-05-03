@@ -6,7 +6,7 @@ import { ImagesRequest } from '../../shared/constants/request.constant';
     selector: '[eeImgFallback]'
 })
 export class ImgFallbackDirective implements OnInit, OnDestroy {
-    @Input('eeImgFallback') fallbackUrl: string;
+    @Input() eeImgFallback: string;
     private defaultUrl = new ImagesRequest().base + 'no-image-available.png';
     private nativeElement: HTMLElement;
     private errorEventSubscription;
@@ -19,7 +19,7 @@ export class ImgFallbackDirective implements OnInit, OnDestroy {
     }
 
     private onError () {
-        const url = this.fallbackUrl || this.defaultUrl;
+        const url = this.eeImgFallback || this.defaultUrl;
 
         if (this.nativeElement.getAttribute('src') !== url) {
             this.renderer.setAttribute(this.nativeElement, 'src', url);
