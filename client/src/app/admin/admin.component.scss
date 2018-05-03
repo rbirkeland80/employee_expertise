@@ -1,3 +1,58 @@
-* {
-    color: palevioletred !important;
+@import 'sharedSettings';
+
+.admin-container {
+    min-height: 50vh;
+
+    mat-drawer {
+        background-color: $color-blue-light;
+
+        ul {
+            list-style-type: none;
+            padding-left: 0px;
+            margin-top: 0px;
+
+            li {
+                line-height: 2;
+                padding: 0 15px;
+
+                a, a:link, a:visited, a:active {
+                    color: $color-blue-main;
+                }
+
+                a:hover {
+                    color: $color-pure-white;
+                    cursor: pointer;
+                }
+
+                &.active {
+                    background-color: $color-blue-dark;
+
+                    a, a:link, a:visited, a:active {
+                        color: $color-blue-light;
+                    }
+
+                    a:hover {
+                        color: $color-pure-white;
+                    }
+                }
+            }
+        }
+    }
+
+    mat-drawer-content {
+        .toggle-sign {
+            padding: 10px;
+            background-color: $color-blue-light;
+            border: 0 none;
+            border-radius: 0px 0px 8px 0px;
+            font-size: 24px;
+            color: $color-blue-main;
+            font-weight: bold;
+            height: 28px;
+            padding: 2px 12px;
+            -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0,0.5);
+            -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, .5);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, .5);
+        }
+    }
 }

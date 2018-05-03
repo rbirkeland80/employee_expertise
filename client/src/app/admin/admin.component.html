@@ -1,1 +1,25 @@
-<p>This is admin route loaded lazily</p>
+<mat-drawer-container class="admin-container">
+    <mat-drawer #sidenav mode="side"
+        [(opened)]="sidebarOpened"
+        (opened)="updateToggleSign()"
+        (closed)="updateToggleSign()">
+        <ul class="navbar">
+            <li routerLinkActive="active">
+                <a routerLink="/admin/employees">Employees</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/admin/levels">Levels</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/admin/profiles">Profiles</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink="/admin/expertise">Expertise</a>
+            </li>
+        </ul>
+    </mat-drawer>
+    <mat-drawer-content>
+        <input type="button" (click)="sidenav.toggle()" [value]="toggleSign" class="toggle-sign" />
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
