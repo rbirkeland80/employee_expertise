@@ -5,7 +5,7 @@ import { Level } from '../../models/level.model';
 export const ADD_LEVEL = 'ADD_LEVEL';
 export const SET_LEVEL = 'SET_LEVEL';
 export const SET_LEVELS = 'SET_LEVELS';
-export const TRY_GET_LEVELS = 'TRY_GET_PROFILES';
+export const TRY_GET_LEVELS = 'TRY_GET_LEVELS';
 
 export class AddLevel implements Action {
     readonly type = ADD_LEVEL;

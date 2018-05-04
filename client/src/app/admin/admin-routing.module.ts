@@ -11,6 +11,7 @@ const AdminRoutes: Routes = [
             { path: 'levels', loadChildren: 'app/admin/levels/levels.module#LevelsModule' },
             { path: 'profiles', loadChildren: 'app/admin/profiles/profiles.module#ProfilesModule' },
             { path: 'expertise', loadChildren: 'app/admin/expertise/expertise.module#ExpertiseModule' },
+            { path: 'permissions', loadChildren: 'app/admin/permissions/permissions.module#PermissionsModule' },
             { path: '', redirectTo: '/admin/employees', pathMatch: 'full' }
         ]
     },
