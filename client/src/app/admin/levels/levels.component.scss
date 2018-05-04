@@ -1,0 +1,54 @@
+@import 'sharedSettings';
+
+.add-new-container {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+main {
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        line-height: 2.5;
+
+        div {
+            border-bottom: 1px solid $color-grey-border;
+            padding: 0 10px;
+
+            span {
+                display: inline-block;
+                width: 20%;
+
+                &.counter {
+                    width: 35px;
+                }
+
+                &.name {
+                    width: 50%;
+                }
+
+                &.rank {
+                    width: calc(30% - 135px);
+                }
+
+                &.action-buttons {
+                    width: 80px;
+                    text-align: right;
+                }
+            }
+
+            &.header {
+                font-weight: bold;
+            }
+
+            &.body:hover {
+                cursor: pointer;
+                background-color: $color-blue-light;
+            }
+        }
+    }
+}

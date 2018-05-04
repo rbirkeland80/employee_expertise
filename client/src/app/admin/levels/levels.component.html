@@ -1,3 +1,29 @@
-<p>
-    levels works!
-</p>
+<section *ngIf="levels">
+    <div class="add-new-container">
+        <input type="button" (click)="openAddForm()" value="Add New" class="button add-button" />
+    </div>
+    <main>
+        <ul>
+            <li>
+                <div class="header">
+                    <span class="counter">&nbsp;</span>
+                    <span class="name">Level</span>
+                    <span class="status">Status</span>
+                    <span class="rank">Rank</span>
+                    <span class="action-buttons">Actions</span>
+                </div>
+            </li>
+            <li *ngFor="let item of levels; let i = index">
+                <div class="body">
+                    <span class="counter">{{i + 1}}</span>
+                    <span class="name">{{item.name}}</span>
+                    <span class="status">{{item.active}}</span>
+                    <span class="rank">{{item.rank | number}}</span>
+                    <span class="action-buttons">
+                        <input type="button" (click)="delete()" value="Delete" class="button delete-button" />
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </main>
+</section>
