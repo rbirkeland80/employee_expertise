@@ -57,6 +57,8 @@
                 }
 
                 &.dorp-down {
+                    z-index: 2;
+
                     ul {
                         display: none;
                         background-color: $color-blue-main;

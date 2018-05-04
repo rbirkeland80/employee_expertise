@@ -1,7 +1,11 @@
 import { ActionReducerMap } from '@ngrx/store';
 
+import * as fromProfiles from '../shared/store/profiles/profiles.reduces';
+
 export interface AppState {
-    // TO DO: add app state here
+    profiles: fromProfiles.State;
 }
 
-export const appReducers: ActionReducerMap<AppState> = {};
+export const appReducers: ActionReducerMap<AppState> = {
+    profiles: fromProfiles.profilesReducer
+};

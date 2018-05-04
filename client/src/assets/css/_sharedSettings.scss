@@ -16,3 +16,28 @@ $font-size-small: 10px;
 .main-bg {
     background-color: $color-blue-main;
 }
+
+.button {
+    padding: 3px 7px;
+    height: 30px;
+    border-radius: 8px;
+    border-color: transparent;
+    -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0,0.4);
+    -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0,0.4);
+    box-shadow: 1px 2px 3px rgba(0, 0, 0,0.4);
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.9;
+    }
+}
+
+.add-button {
+    background-color: $color-blue-dark;
+    color: $color-blue-light;
+}
+
+.delete-button {
+    background-color: $color-red;
+    color: $color-red-bg;
+}

@@ -58,7 +58,7 @@ class BaseCrud {
     }
 
     getAllEntries(req, res) {
-        return this.model.find().where('active').equals(true).select({ meta: 0, __v: 0, active: 0, password: 0 })
+        return this.model.find().select({ meta: 0, __v: 0, password: 0 })
             .then(data => {
                 if (!data || data.length === 0) {
                     return res.status(204).send(data);

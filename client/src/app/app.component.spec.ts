@@ -1,3 +1,5 @@
+/* tslint:disable:component-selector */
+
 import { TestBed, async } from '@angular/core/testing';
 import { Component } from '@angular/core';
 
