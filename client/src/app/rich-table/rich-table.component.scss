@@ -1,0 +1,39 @@
+@import 'sharedSettings';
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    line-height: 2.5;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-flow: column;
+    border-bottom: 1px solid $color-grey-border;
+
+    div {
+        padding: 0 10px;
+        display: flex;
+        width: calc(100% - 20px);
+
+        > span {
+            display: inline-block;
+            width: 125px;
+
+            &:last-child {
+                text-align: right;
+            }
+        }
+
+        &.header {
+            font-weight: bold;
+        }
+
+        &.body-row:hover {
+            cursor: pointer;
+            background-color: $color-blue-light;
+        }
+    }
+}

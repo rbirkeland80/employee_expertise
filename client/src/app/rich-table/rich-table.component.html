@@ -1,0 +1,24 @@
+<ul>
+    <li>
+        <div class="header">
+            <span *ngFor="let column of columns" [ngStyle]="column.inlineStyles" [ngClass]="column.className">{{column.columnName}}</span>
+        </div>
+    </li>
+    <li *ngFor="let row of data.list; let i = index" (click)="toggleRowExpand(row._id)">
+        <div class="body-row">
+            <span *ngFor="let column of columns; let y = index"
+                [ngSwitch]="y"
+                [ngStyle]="column.inlineStyles"
+                [ngClass]="column.className">
+                <span *ngSwitchCase="0">{{i + 1}}</span>
+                <span *ngSwitchCase="columns.length - 1">
+                    <input type="button" (click)="delete(row._id, $event)" value="Delete" class="button delete-button" />
+                </span>
+                <span *ngSwitchDefault>{{(row[column.linkerProperty]) | richTableGenericPipe : column.pipes}}</span>
+            </span>
+        </div>
+        <div class="body-form" *ngIf="rowExpanded">
+            <ng-container *ngTemplateOutlet="editForm"></ng-container>
+        </div>
+    </li>
+</ul>
