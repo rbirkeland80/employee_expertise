@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
+import { TableData, TableOptions } from '../../rich-table/rich-table.model';
+import { PermissionsRichTableHelperService } from './permissions-richTableHelper.service';
 import { Permission } from '../../shared/models/permission.model';
 import * as PermissionsActions from '../../shared/store/permissions/permissions.actions';
 import * as fromApp from '../../store/app.reducers';
@@ -12,10 +14,18 @@ import * as fromApp from '../../store/app.reducers';
     styleUrls: ['./permissions.component.scss']
 })
 export class PermissionsComponent implements OnInit {
-    permissions: Permission[];
+    tableData: TableData;
+    tableOptions: TableOptions;
     private permissionsState: Observable<{ permissions: Permission[] }>;
 
-    constructor(private store: Store<fromApp.AppState>) { }
+    constructor(private store: Store<fromApp.AppState>, private tableHelper: PermissionsRichTableHelperService) {
+        this.tableData = {
+            columnDef: tableHelper.buildColumnDef(),
+            list: []
+        };
+
+        this.tableOptions = tableHelper.buildTableOptions();
+    }
 
     ngOnInit() {
         this.store.dispatch(new PermissionsActions.TryGetPermissions);
@@ -24,7 +34,7 @@ export class PermissionsComponent implements OnInit {
             .subscribe(
                 (state: { permissions: Permission[] }) => {
                     if (state && state.permissions) {
-                        this.permissions = state.permissions;
+                        this.tableData.list = state.permissions;
                     }
                 }
             );

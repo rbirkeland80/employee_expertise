@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RichTableComponent } from './rich-table.component';
 import { RichTableGenericPipe } from './richTableGenericPipe.pipe';
+import { RichTableColumnBuilderService } from './rich-tableBaseColumnBuilder.service';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import { RichTableGenericPipe } from './richTableGenericPipe.pipe';
     ],
     exports: [
         RichTableComponent
-    ]
+    ],
+    providers: [ RichTableColumnBuilderService ]
 })
 export class RichTableModule { }
