@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
 
+import { RichTableColumnBuilderService } from '../../rich-table/rich-tableBaseColumnBuilder.service';
 import { StatusTransformPipe } from '../../shared/pipes/statusTransformPipe.pipe';
 import { ColumnDefModel, TableOptions } from '../../rich-table/rich-table.model';
 
 @Injectable()
 export class LevelsRichTableHelperService {
-    constructor(private statusTransform: StatusTransformPipe) { }
+    constructor(private statusTransform: StatusTransformPipe, private columnBuilder: RichTableColumnBuilderService) { }
 
     private deleteItem(id) {
         console.log('delete: ', id);
     }
 
     buildColumnDef(): ColumnDefModel[] {
-        return [
-            {
-                index: 0,
-                columnName: '',
-                isSortable: false,
-                columnWidth: '35px'
-            },
+        const columns = [
             {
                 index: 1,
                 columnName: 'Level',
@@ -39,15 +34,10 @@ export class LevelsRichTableHelperService {
                 isSortable: false,
                 linkerProperty: 'rank',
                 columnWidth: 'calc(30% - 115px)'
-            },
-            {
-                index: 4,
-                columnName: 'Actions',
-                isSortable: false,
-                callback: this.deleteItem,
-                columnWidth: '80px'
             }
         ];
+
+        return this.columnBuilder.buildColumnDef(columns, this.deleteItem);
     }
 
     buildTableOptions(): TableOptions {

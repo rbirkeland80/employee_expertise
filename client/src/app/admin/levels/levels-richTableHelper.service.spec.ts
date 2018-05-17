@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LevelsRichTableHelperService } from './levels-richTableHelper.service';
+import { RichTableColumnBuilderService } from '../../rich-table/rich-tableBaseColumnBuilder.service';
 import { StatusTransformPipe } from '../../shared/pipes/statusTransformPipe.pipe';
 
 describe('LevelsRichTableHelperService service', () => {
@@ -12,9 +13,13 @@ describe('LevelsRichTableHelperService service', () => {
                 transform: value => value
             }
         };
+        const RichTableColumnBuilderServiceMock = {
+            buildColumnDef: (list, cb) => list
+        };
         const configObj = {
             providers: [
                 LevelsRichTableHelperService,
+                { provide: RichTableColumnBuilderService, useValue: RichTableColumnBuilderServiceMock },
                 { provide: StatusTransformPipe, useValue: StatusTransformPipeMock }
             ]
         };
@@ -28,15 +33,12 @@ describe('LevelsRichTableHelperService service', () => {
     it('should buildColumnDef array', () => {
         const columnDef = service.buildColumnDef();
 
-        expect(columnDef.length).toEqual(5);
+        expect(columnDef.length).toEqual(3);
 
         columnDef.forEach((column, key) => {
             expect(column.index).toBeDefined();
             expect(column.columnName).toBeDefined();
-
-            if (key !== columnDef.length - 1 && key !== 0) {
-                expect(column.linkerProperty).toBeDefined();
-            }
+            expect(column.linkerProperty).toBeDefined();
         });
     });
 
