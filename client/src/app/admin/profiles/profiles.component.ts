@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
+import { TableData, TableOptions } from '../../rich-table/rich-table.model';
+import { ProfilesRichTableHelperService } from './profiles-richTableHelper.service';
 import { Profile } from '../../shared/models/profile.model';
 import * as ProfilesActions from '../../shared/store/profiles/profiles.actions';
 import * as fromApp from '../../store/app.reducers';
@@ -12,10 +14,22 @@ import * as fromApp from '../../store/app.reducers';
     styleUrls: ['./profiles.component.scss']
 })
 export class ProfilesComponent implements OnInit {
-    profiles: Profile[];
+    tableData: TableData;
+    tableOptions: TableOptions;
     private profilesState: Observable<{ profiles: Profile[] }>;
 
-    constructor(private store: Store<fromApp.AppState>) { }
+    constructor(private store: Store<fromApp.AppState>, private tableHelper: ProfilesRichTableHelperService) {
+        this.tableData = {
+            columnDef: tableHelper.buildColumnDef(),
+            list: []
+        };
+
+        this.tableOptions = tableHelper.buildTableOptions();
+    }
+
+    openAddForm() {
+        console.log('add new opened');
+    }
 
     ngOnInit() {
         this.store.dispatch(new ProfilesActions.TryGetProfiles);
@@ -24,7 +38,7 @@ export class ProfilesComponent implements OnInit {
             .subscribe(
                 (state: { profiles: Profile[] }) => {
                     if (state && state.profiles) {
-                        this.profiles = state.profiles;
+                        this.tableData.list = state.profiles;
                     }
                 }
             );
