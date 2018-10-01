@@ -58,13 +58,27 @@ class BaseCrud {
     }
 
     getAllEntries(req, res) {
-        return this.model.find().select({ meta: 0, __v: 0, password: 0 })
+        const params = req.query;
+        const limit = Number(params.rowsPerPage) || 100;
+        const skip = Number(params.pageNum) * Number(params.rowsPerPage) - Number(params.rowsPerPage) || 0;
+        let totalCount;
+
+        return this.model.count()
+            .then(data => {
+                if (!data || data === 0) {
+                    return res.status(204).send(data);
+                }
+
+                totalCount = data;
+
+                return this.model.find().select({ meta: 0, __v: 0, password: 0 }).limit(limit).skip(skip)
+            })
             .then(data => {
                 if (!data || data.length === 0) {
                     return res.status(204).send(data);
                 }
 
-                res.json(data);
+                res.json({ list: data, count: totalCount });
             })
             .catch(error => {
                 handleErrorResponse(error, res);

@@ -37,7 +37,7 @@ export class PermissionsRichTableHelperService {
         return this.columnBuilder.buildColumnDef(columns, this.deleteItem);
     }
 
-    buildTableOptions(): TableOptions {
+    buildTableOptions(paginationCb): TableOptions {
         return {
             rowClickCb: function (id) {
                 console.log('row clicked: ', id);
@@ -45,13 +45,9 @@ export class PermissionsRichTableHelperService {
             sortingEnabled: false,
             filteringEnabled: false,
             filteringColumns: null, // ['Level', 'Rank']
-            paginationEnabled: false,
+            paginationEnabled: true,
             rowsPerPageSettings: [5, 10, 15],
-            paginationActionCb: function (settings) {
-                console.log(settings);
-                // settings.rowsPerPage = 10
-                // settings.pageNumber = 2
-            }
+            paginationActionCb: paginationCb
         };
     }
 }

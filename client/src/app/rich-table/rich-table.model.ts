@@ -25,10 +25,10 @@ export interface TableOptions {
     filteringEnabled?: Boolean;
     filteringColumns?: String[] | null;
     paginationEnabled?: Boolean;
-    rowsPerPageSettings?: Number[] | null;
+    rowsPerPageSettings?: number[] | null;
     paginationActionCb?: Function;
 }
 
 export class TableData {
-    constructor(public list: DataModel[], public columnDef: ColumnDefModel[]) {}
+    constructor(public list: DataModel[], public columnDef: ColumnDefModel[], public totalCount: number) {}
 }

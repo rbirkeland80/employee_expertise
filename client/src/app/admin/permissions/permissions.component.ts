@@ -17,25 +17,42 @@ export class PermissionsComponent implements OnInit {
     tableData: TableData;
     tableOptions: TableOptions;
     private permissionsState: Observable<{ permissions: Permission[] }>;
+    private paginationCb(pageNum, rowsPerPage) {
+        const params = {
+            pageNum: pageNum,
+            rowsPerPage: rowsPerPage
+        };
+
+        this.store.dispatch(new PermissionsActions.TryGetPermissions(params));
+    }
 
     constructor(private store: Store<fromApp.AppState>, private tableHelper: PermissionsRichTableHelperService) {
         this.tableData = {
             columnDef: tableHelper.buildColumnDef(),
-            list: []
+            list: [],
+            totalCount: 0
         };
 
-        this.tableOptions = tableHelper.buildTableOptions();
+        this.tableOptions = tableHelper.buildTableOptions(this.paginationCb.bind(this));
     }
 
     ngOnInit() {
-        this.store.dispatch(new PermissionsActions.TryGetPermissions);
+        const params = {
+            pageNum: 1,
+            rowsPerPage: 5,
+            filter: ''
+        };
+        this.store.dispatch(new PermissionsActions.TryGetPermissions(params));
+        this.store.dispatch(new PermissionsActions.SetRowsPerPage(this.tableOptions.rowsPerPageSettings[0]));
         this.permissionsState = this.store.select('permissions');
         this.permissionsState
             .subscribe(
-                (state: { permissions: Permission[] }) => {
-                    if (state && state.permissions) {
-                        this.tableData.list = state.permissions;
+                (state: fromApp.AppState['permissions']) => {
+                    if (!state) {
+                        return;
                     }
+                    this.tableData.list = state.permissions;
+                    this.tableData.totalCount = state.totalCount;
                 }
             );
     }

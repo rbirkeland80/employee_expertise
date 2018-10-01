@@ -62,4 +62,21 @@ export class RichTableComponent implements OnInit {
     toggleRowExpand(id) {
         console.log(id);
     }
+
+    forward(to) {
+        if (!to) {
+            this.options.paginationActionCb(this.data.totalCount / 5);
+        }
+
+        this.options.paginationActionCb(2);
+    }
+
+    back(to) {
+        if (!to) {
+            this.options.paginationActionCb(0);
+        }
+
+        this.options.paginationActionCb(1);
+
+    }
 }

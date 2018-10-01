@@ -22,3 +22,22 @@
         </div>
     </li>
 </ul>
+<nav *ngIf="data.totalCount > data.list.length && options.paginationEnabled" id="pagination">
+    <span class="left-nav">
+        <a (click)="back(0)" class="nav-link" [class.disabled]="true">
+            <span class="fa fa-angle-double-left" title="To start"></span>
+        </a>
+        <a (click)="back()" class="nav-link" [class.disabled]="true">
+            <span class="fa fa-angle-left" title="Previous page"></span>
+        </a>
+    </span>
+    <span class="nav-data">1-5 of {{data.totalCount}}</span>
+    <span class="right-nav">
+        <a (click)="forward(1)" class="nav-link" [class.disabled]="false">
+            <span class="fa fa-angle-right" title="Next page"></span>
+        </a>
+        <a (click)="forward()" class="nav-link" [class.disabled]="false">
+            <span class="fa fa-angle-double-right" title="To end"></span>
+        </a>
+    </span>
+</nav>

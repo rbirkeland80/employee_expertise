@@ -10,7 +10,7 @@ const initialState: State = {
     levels: []
 };
 
-export function levelsReducer(state = initialState, action: LevelsActions.ProfilesActions) {
+export function levelsReducer(state = initialState, action: LevelsActions.LevelsActions) {
     switch (action.type) {
         case LevelsActions.SET_LEVEL:
             return {

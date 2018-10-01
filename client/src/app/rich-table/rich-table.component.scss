@@ -37,3 +37,35 @@ li {
         }
     }
 }
+
+#pagination {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
+
+    .nav-link {
+        font-size: 20px;
+        color: $color-blue-main;
+        margin: 0 5px;
+        font-weight: bold;
+
+        &:hover {
+            color: $color-blue-dark;
+            cursor: pointer;
+        }
+
+        &.disabled {
+            opacity: 0.6;
+
+            &:hover {
+                color: $color-blue-main !important;
+                cursor: arrow !important;
+            }
+        }
+    }
+
+    .nav-data {
+        line-height: 1.5;
+        margin: 0 10px;
+    }
+}

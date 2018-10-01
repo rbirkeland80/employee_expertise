@@ -31,4 +31,4 @@ export class TryGetLevels implements Action {
     constructor() {}
 }
 
-export type ProfilesActions = AddLevel | SetLevel | SetLevels | TryGetLevels;
+export type LevelsActions = AddLevel | SetLevel | SetLevels | TryGetLevels;
